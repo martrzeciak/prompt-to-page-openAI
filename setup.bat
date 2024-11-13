@@ -13,6 +13,7 @@ pip install -r requirements.txt
 
 REM Create .env file if it does not exist
 if not exist .env (
+    echo # Environment Variables > .env
     echo Creating .env file...
 ) else (
     echo .env file already exists.
