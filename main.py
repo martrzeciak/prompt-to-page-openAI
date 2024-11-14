@@ -3,6 +3,12 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 
+# Load environment variables from the .env file
+load_dotenv()
+
+# Retrieve the OpenAI API key from the environment
+openai_api_key = os.getenv("OPENAI_API_KEY")
+
 
 def read_text_file(file_path):
     """
@@ -26,26 +32,6 @@ def read_text_file(file_path):
 
 
 
-def load_api_key():
-    """
-    Loads the OpenAI API key from the environment variables.
-
-    Returns:
-        str: The OpenAI API key, or raises an exception if not found.
-    """
-    
-    # Load environment variables from the .env file
-    load_dotenv()
-
-    # Retrieve the OpenAI API key from the environment
-    api_key = os.getenv("OPENAI_API_KEY")
-
-    if not api_key:
-        raise ValueError("API key not found. Please make sure to set the OPENAI_API_KEY environment variable.")
-
-    return api_key
-
-
 def get_openai_response(prompt):
     """
     Sends a prompt to the OpenAI API and returns the response.
@@ -56,10 +42,8 @@ def get_openai_response(prompt):
     Returns:
         str: The response from the API, or an error message if the request fails.
     """
-    # Load the API key and set it for OpenAI's API client
-    api_key = load_api_key()
     client = OpenAI(
-    api_key=os.environ['OPENAI_API_KEY'], 
+        api_key=openai_api_key
     )
 
     chat_completion = client.chat.completions.create(
