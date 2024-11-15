@@ -7,7 +7,6 @@ Przekształć dostarczony artykuł na kod HTML, przestrzegając następujących 
 - Rozdziel artykuł na logiczne akapity, wykorzystaj strukturalne podziały dla zachowania czytelności.
 - Dodaj tag `<div>` z klasą o nazwie `container`, w którym znajdować się będzie cała zawartość artykułu.
 - Nie dodawaj tagu `<body>'.
-- Nie używaj w treści odpowiedzi języka Markdown np. '```html', '```'.
 
 # Output Format
 

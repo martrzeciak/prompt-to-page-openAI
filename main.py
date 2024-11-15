@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import re
 import requests
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -127,16 +128,19 @@ def get_openai_response():
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": generate_html_prompt + article_content},
             ],
-            model="gpt-4o-mini",
+            model="gpt-4o",
             temperature=1,
         )
         
         json_response = json.loads(response.to_json())
         html_content = json_response['choices'][0]['message']['content']
-        
+        print(html_content)
         logging.info("Successfully generated HTML using OpenAI.")
         
-        return html_content
+        pattern = r"^```html\n|```$"
+        cleaned_response = re.sub(pattern, "", html_content, flags=re.MULTILINE)
+        
+        return cleaned_response
     except Exception as e:
         logging.error(f"Error interacting with OpenAI API: {e}")
         return None
@@ -197,9 +201,9 @@ def main():
 
         image_descriptions = extract_alt_texts(response)
         
-        if image_descriptions:
-            image_names = process_images(image_descriptions)
-            response = insert_image_paths(response, image_names)
+        # if image_descriptions:
+        #     image_names = process_images(image_descriptions)
+        #     response = insert_image_paths(response, image_names)
                     
         save_html_to_file(response, "./output/artykul.html")
         
