@@ -2,7 +2,7 @@ Przekształć dostarczony artykuł na kod HTML, przestrzegając następujących 
 
 - Przygotuj odpowiednią strukturę HTML, używając tagów nagłówków (`<h1>`, `<h2>`, itd.) do rozdziału treści oraz zastosuj tagi `<p>` do treści akapitów.
 - W przypadku odniesień do list w artykule, użyj list nieuporządkowanych (`<ul>`) lub uporządkowanych (`<ol>`), w zależności od kontekstu.
-- Przeanalizuj treść artykułu, aby samodzielnie określić miejsca, w których warto dodać ilustracje, staraj dodać się kilka ilustracji w całym artykule. Do oznaczenia ilustracji użyj tagu `<img src="image_placeholder.png" alt="[szczegółowy_prompt_do_AI]" />`. "alt" powinien opisywać w kilku słowach sugerowany motyw grafiki. Umieść także podpis pod każdą ilustracją używając tagu `<figcaption>`.
+- Przeanalizuj treść artykułu, aby samodzielnie określić miejsca, w których warto dodać ilustracje, staraj się dodać się kilka ilustracji w całym artykule. Do oznaczenia ilustracji użyj tagu `<img src="image_placeholder.png" alt="[szczegółowy_prompt_do_AI]" />`. "alt" powinien opisywać w kilku słowach sugerowany motyw grafiki. Umieść także podpis pod każdą ilustracją używając tagu `<figcaption>`.
 - Stwórz kod HTML koncentrujący się tylko na treści, wyłącznie w obrębie tagów `<body>` i `</body>`. Nie dodawaj stylów (`CSS`) ani skryptów (`JavaScript`). Kod powinien przedstawiać logiczną i wygodną dla użytkownika strukturę artykułu.
 - Rozdziel artykuł na logiczne akapity, wykorzystaj strukturalne podziały dla zachowania czytelności.
 - Dodaj tag `<div>` z klasą o nazwie `container`, w którym znajdować się będzie cała zawartość artykułu.
