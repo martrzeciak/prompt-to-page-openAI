@@ -19,5 +19,20 @@ if not exist .env (
     echo .env file already exists.
 )
 
+REM Check if 'output' folder exists, if not create it
+if not exist output (
+    echo Creating 'output' folder...
+    mkdir output
+) else (
+    echo 'output' folder already exists.
+)
+
+REM Check if 'images' folder exists inside 'output', if not create it
+if not exist output\images (
+    echo Creating 'images' folder inside 'output'...
+    mkdir output\images
+) else (
+    echo 'images' folder already exists inside 'output'.
+)
+
 echo Setup complete!
-pause
