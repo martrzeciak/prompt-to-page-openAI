@@ -31,7 +31,7 @@ python-slugify
 ```
 W pliku `.env` umieścić należy klucz do API OpenAI: `OPENAI_API_KEY=your_api_key`. Po zmodyfikowaniu pliku konieczne jest ponowne uruchomienie terminala.
 
-Zostanie również stworzona następująca struktura folderów: `root/output/images`.
+Zostanie również stworzona następująca struktura folderów (jeśli z jakiegoś powodu nie istnieją): `root/output/images`.
 
 ## Uruchomienie aplikacji:
 Przed uruchomieniem należy upewnić się, że użytkownik znajduje się w głównym folderze projektu.
@@ -63,7 +63,7 @@ Jeśli działanie aplikacji zakończy się sukcesem w katalogu `output` zostaną
 - `requirements.txt`: Lista zależności wymaganych przez aplikację (np. `openai`, `beautifulsoup4`).
 
 - `README.md`: Główny plik dokumentacyjny projektu, zawierający opis instalacji i użytkowania.
-- 
+
 - `setup.bat`: Skrypt odpowiedzialny za wstępną konfigurację.
 
 **OS:**  Windows 11 23H2 | **Python**  3.13.0 | **pip** 24.2 
