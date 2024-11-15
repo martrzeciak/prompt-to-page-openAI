@@ -44,11 +44,10 @@ python main.py
   - `generate_html_structure.txt`: Określa wytyczne do generowania struktury HTML.
   - `generate_image.txt`: Prompt używany do generowania grafik w AI.
 
-- **📂 szablony**: Zawiera szablon HTML dla podglądu artykułu.
-  - `szablon.html`: Szablon z pustą sekcją `<body>`.
-
 - **📂 src**: Katalog na kod źródłowy aplikacji.
   - `main.py`: Główny skrypt aplikacji odpowiedzialny za całe działanie programu.
+
+- **szablon.html**: Szablon z pustą sekcją `<body>`.
 
 - **article.txt**: Plik wejściowy z treścią artykułu, który ma być przetwarzany.
 
