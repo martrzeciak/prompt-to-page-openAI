@@ -8,11 +8,6 @@ from bs4 import BeautifulSoup
 from bs4.formatter import HTMLFormatter
 from slugify import slugify
 
-class UnsortedAttributes(HTMLFormatter):
-    def attributes(self, tag):
-        for k, v in tag.attrs.items():
-            yield k, v
-
 load_dotenv()
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
@@ -22,6 +17,11 @@ if not openai_api_key:
     exit(1)
     
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+class UnsortedAttributes(HTMLFormatter):
+    def attributes(self, tag):
+        for k, v in tag.attrs.items():
+            yield k, v
 
 
 def read_file(file_path, mode='r', encoding='utf-8'):
@@ -166,14 +166,25 @@ def download_image(image_url, image_name):
     try:
         response = requests.get(image_url, stream=True)
         if response.status_code == 200:
-            with open("output/images/" + image_name, 'wb') as file:
+            with open("./output/images/" + image_name, 'wb') as file:
                 file.write(response.content)
-            logging.info(f"Image downloaded and saved to {"output/images/" + image_name}")
+            logging.info(f"Image downloaded and saved to {'./output/images/' + image_name}")
         else:
             logging.error(f"Failed to download image. HTTP status code: {response.status_code}")
     except Exception as e:
         logging.error(f"Error downloading image: {e}")
     
+
+def process_images(image_descriptions):
+    image_names = []
+    for description in image_descriptions:
+        image_url = generate_image(description)
+        if image_url:
+            image_name = slugify(description) + ".jpg"
+            download_image(image_url, image_name)
+            image_names.append(image_name)
+    return image_names
+
 
 def main():
     try:
@@ -186,15 +197,8 @@ def main():
 
         image_descriptions = extract_alt_texts(response)
         
-        if not image_descriptions:
-            logging.info("No image descriptions found in the HTML content.")
-        else:
-            for description in image_descriptions:
-                image_url = generate_image(description)
-                if image_url:
-                    image_name = slugify(description) + ".jpg"
-                    download_image(image_url, image_name)
-                    image_names.append(image_name)
+        if image_descriptions:
+            image_names = process_images(image_descriptions)
             response = insert_image_paths(response, image_names)
                     
         save_html_to_file(response, "./output/artykul.html")
