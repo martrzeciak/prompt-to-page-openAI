@@ -28,7 +28,6 @@ def read_text_file(file_path):
     if not os.path.exists(file_path):
         logging.error(f"File not found: {file_path}")
         return None
-
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             return file.read()
@@ -36,6 +35,22 @@ def read_text_file(file_path):
         logging.error(f"Failed to read file {file_path}: {e}")
         return None
 
+
+def read_html_template(file_path):
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            content = file.read()
+            
+        logging.info(f"File {file_path} successfully read.")
+        
+        return content
+    except FileNotFoundError:
+        logging.error(f"File {file_path} not found.")
+        return None
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
+        return None
+    
 
 def save_html_to_file(html_code, output_path="./output/artykul.html"):
     try:
@@ -45,6 +60,7 @@ def save_html_to_file(html_code, output_path="./output/artykul.html"):
             
         with open(output_path, "w", encoding="utf-8") as file:
             file.write(html_code)
+            
         logging.info(f"HTML successfully saved to {output_path}")
     except IOError as e:
         logging.error(f"Failed to save HTML to {output_path}: {e}")
@@ -148,27 +164,29 @@ def download_image(image_url, image_name):
 
 def main():
     try:
-        image_names = []
-        response = get_openai_response()
+        # image_names = []
+        # response = get_openai_response()
         
-        if not response:
-            logging.error("Failed to generate HTML content. Exiting...")
-            return
+        # if not response:
+        #     logging.error("Failed to generate HTML content. Exiting...")
+        #     return
 
-        image_descriptions = extract_alt_texts(response)
+        # image_descriptions = extract_alt_texts(response)
         
-        if not image_descriptions:
-            logging.warning("No image descriptions found in the HTML content.")
-        else:
-            for description in image_descriptions:
-                image_url = generate_image(description)
-                if image_url:
-                    image_name = slugify(description) + ".jpg"
-                    download_image(image_url, image_name)
-                    image_names.append(image_name)
-                    response = insert_image_paths(response, image_names)
+        # if not image_descriptions:
+        #     logging.info("No image descriptions found in the HTML content.")
+        # else:
+        #     for description in image_descriptions:
+        #         image_url = generate_image(description)
+        #         if image_url:
+        #             image_name = slugify(description) + ".jpg"
+        #             download_image(image_url, image_name)
+        #             image_names.append(image_name)
+        #             response = insert_image_paths(response, image_names)
                     
-        save_html_to_file(response)
+        #save_html_to_file(response)
+        
+        print(read_html_template("szablon.html"))
     except Exception as e:
         logging.error(f"An unexpected error occurred in the main flow: {e}")
 
