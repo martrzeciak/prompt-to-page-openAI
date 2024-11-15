@@ -24,33 +24,23 @@ if not openai_api_key:
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
-def read_text_file(file_path):
+def read_file(file_path, mode='r', encoding='utf-8'):
     if not os.path.exists(file_path):
         logging.error(f"File not found: {file_path}")
         return None
     try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            return file.read()
+        with open(file_path, mode, encoding=encoding) as file:
+            content = file.read()
+        
+        logging.info(f"File {file_path} successfully read.")
+        return content
     except IOError as e:
         logging.error(f"Failed to read file {file_path}: {e}")
-        return None
-
-
-def read_html_template(file_path):
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            content = file.read()
-            
-        logging.info(f"File {file_path} successfully read.")
-        
-        return content
-    except FileNotFoundError:
-        logging.error(f"File {file_path} not found.")
         return None
     except Exception as e:
         logging.error(f"An error occurred: {e}")
         return None
-    
+
 
 def save_html_to_file(html_code, output_path):
     try:
@@ -122,8 +112,8 @@ def insert_content_into_html(template_html, content):
 
 
 def get_openai_response():
-    article_content = read_text_file("./article.txt")
-    generate_html_prompt = read_text_file("./prompts/generate_html_structure.txt")
+    article_content = read_file("./article.txt")
+    generate_html_prompt = read_file("./prompts/generate_html_structure.txt")
 
     if not article_content or not generate_html_prompt:
         logging.error("Failed to read input files for OpenAI request.")
@@ -208,7 +198,7 @@ def main():
                     
         save_html_to_file(response, "./output/artykul.html")
         
-        html_template = read_html_template("szablon.html")
+        html_template = read_file("szablon.html")
         html_to_save = insert_content_into_html(html_template, response)
         save_html_to_file(html_to_save, "./output/podglad.html")
     except Exception as e:
