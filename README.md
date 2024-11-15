@@ -12,7 +12,7 @@ cd prompt-to-page-openAI
 Przed pierwszym uruchomieniem aplikacji należy uruchomić skrypt `setup.bat`, który stworzy wirtualne środowisko (virtual environment), aktywuje je, a następnie zainstaluje wszystkie potrzebne biblioteki i stworzy niezbędną strukturę folderów.
 
 Uruchomienie skryptu:
-lub cmd
+cmd
 ```cmd
 setup.bat
 ```
@@ -34,11 +34,12 @@ W pliku `.env` umieścić należy klucz do API OpenAI: `OPENAI_API_KEY=your_api_
 Zostanie stworzony również następująca struktura folderów: `root/output/images`.
 
 ## Uruchomienie aplikacji:
-Przed uruchomieniem skryptu należy upewnić się, że użytkownik znajduje się w głównym folderze projektu.
+Przed uruchomieniem należy upewnić się, że użytkownik znajduje się w głównym folderze projektu.
 W celu uruchomienia programu należy użyć następującej komendy:
 ```python
 python main.py
 ```
+Jeśli działanie aplikacji zakończy się sukcesem w katalogu `output` zostaną umieszczone: artykul.html i podglad.html, natomiast w folderze `images` zostaną umieszczone wszystkie wygenerowane ilustracje.
 
 ## Opis katalogów i plików
 
