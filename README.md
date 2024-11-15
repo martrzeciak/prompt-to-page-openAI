@@ -1,15 +1,25 @@
+## Klonowanie repozytorium:
+```cmd
+git clone https://github.com/martrzeciak/prompt-to-page-openAI.git
+```
+Przejście do folderu:
+```cmd
+cd prompt-to-page-openAI
+```
+
 ## Przed uruchomieniem aplikacji:  
 
 Przed pierwszym uruchomieniem aplikacji należy uruchomić skrypt `setup.bat`, który stworzy wirtualne środowisko (virtual environment), aktywuje je, a następnie zainstaluje wszystkie potrzebne biblioteki i stworzy niezbędną strukturę folderów.
 
 Uruchomienie skryptu:
-powershell: 
-```powershell
-./setup.bat
-```
 lub cmd
 ```cmd
 setup.bat
+```
+***(Opcjonalne)**  
+Otwarcie edytora:
+```cmd
+code .
 ```
 Skrypt zainstaluje biblioteki umieszone w pliku requirements.txt:
 ```powershell
@@ -19,7 +29,7 @@ beautifulsoup4
 requests
 python-slugify
 ```
-W pliku `.env` umieścić należy klucz do API OpenAI: `OPENAI_API_KEY=your_api_key`.
+W pliku `.env` umieścić należy klucz do API OpenAI: `OPENAI_API_KEY=your_api_key`. Po zmodyfikowaniu pliku konieczne jest ponowne uruchomienie terminala.
 
 Zostanie stworzony również następująca struktura folderów: `root/output/images`.
 
@@ -52,3 +62,6 @@ python main.py
 - **requirements.txt**: Lista zależności wymaganych przez aplikację (np. `openai`, `beautifulsoup4`).
 
 - **README.md**: Główny plik dokumentacyjny projektu, zawierający opis instalacji i użytkowania.
+
+
+**OS:**  Windows 11 23H2 | **Python**  3.13.0 | **pip** 24.2 
