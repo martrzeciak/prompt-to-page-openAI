@@ -52,7 +52,7 @@ def read_html_template(file_path):
         return None
     
 
-def save_html_to_file(html_code, output_path="./output/artykul.html"):
+def save_html_to_file(html_code, output_path):
     try:
         if not os.path.exists(output_path):
             os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -71,7 +71,7 @@ def extract_alt_texts(html_code):
         soup = BeautifulSoup(html_code, 'html.parser')
         alt_texts = [img.get('alt') for img in soup.find_all('img') if img.get('alt')]
         
-        logging.info(f"Extracted {len(alt_texts)} 'alt' attributes from images.")
+        logging.info(f"Extracted {len(alt_texts)} 'alt' attributes from <img> tags.")
         
         return alt_texts
     except Exception as e:
@@ -86,6 +86,9 @@ def insert_image_paths(html_code, image_names):
 
     try:
         soup = BeautifulSoup(html_code, "html.parser")
+        
+        logging.info("HTML template parsed successfully.")
+        
         img_tags = soup.find_all("img")
 
         for img_tag, img_path in zip(img_tags, image_names):
@@ -97,6 +100,25 @@ def insert_image_paths(html_code, image_names):
     except Exception as e:
         logging.error(f"Error inserting image paths: {e}")
         return html_code
+
+
+def insert_content_into_html(template_html, content):
+    try:
+        soup = BeautifulSoup(template_html, 'html.parser')
+        
+        logging.info("HTML template parsed successfully.")
+        
+        body_tag = soup.find('body')
+        
+        content_soup = BeautifulSoup(content, 'html.parser')
+        body_tag.append(content_soup)
+        
+        logging.info("Content successfully inserted into <body> tag.")
+        
+        return soup.prettify()
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
+        return None
 
 
 def get_openai_response():
@@ -164,29 +186,31 @@ def download_image(image_url, image_name):
 
 def main():
     try:
-        # image_names = []
-        # response = get_openai_response()
+        image_names = []
+        response = get_openai_response()
         
-        # if not response:
-        #     logging.error("Failed to generate HTML content. Exiting...")
-        #     return
+        if not response:
+            logging.error("Failed to generate HTML content. Exiting...")
+            return
 
-        # image_descriptions = extract_alt_texts(response)
+        image_descriptions = extract_alt_texts(response)
         
-        # if not image_descriptions:
-        #     logging.info("No image descriptions found in the HTML content.")
-        # else:
-        #     for description in image_descriptions:
-        #         image_url = generate_image(description)
-        #         if image_url:
-        #             image_name = slugify(description) + ".jpg"
-        #             download_image(image_url, image_name)
-        #             image_names.append(image_name)
-        #             response = insert_image_paths(response, image_names)
+        if not image_descriptions:
+            logging.info("No image descriptions found in the HTML content.")
+        else:
+            for description in image_descriptions:
+                image_url = generate_image(description)
+                if image_url:
+                    image_name = slugify(description) + ".jpg"
+                    download_image(image_url, image_name)
+                    image_names.append(image_name)
+            response = insert_image_paths(response, image_names)
                     
-        #save_html_to_file(response)
+        save_html_to_file(response, "./output/artykul.html")
         
-        print(read_html_template("szablon.html"))
+        html_template = read_html_template("szablon.html")
+        html_to_save = insert_content_into_html(html_template, response)
+        save_html_to_file(html_to_save, "./output/podglad.html")
     except Exception as e:
         logging.error(f"An unexpected error occurred in the main flow: {e}")
 
