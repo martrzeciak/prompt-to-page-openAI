@@ -1,2 +1,5 @@
 python-dotenv
 openai
+beautifulsoup4
+requests
+python-slugify

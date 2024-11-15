@@ -1,70 +1,176 @@
+import json
+import logging
 import os
+import requests
 from dotenv import load_dotenv
 from openai import OpenAI
+from bs4 import BeautifulSoup
+from bs4.formatter import HTMLFormatter
+from slugify import slugify
 
+class UnsortedAttributes(HTMLFormatter):
+    def attributes(self, tag):
+        for k, v in tag.attrs.items():
+            yield k, v
 
-# Load environment variables from the .env file
 load_dotenv()
 
-# Retrieve the OpenAI API key from the environment
 openai_api_key = os.getenv("OPENAI_API_KEY")
+
+if not openai_api_key:
+    logging.error("Error: OPENAI_API_KEY not found. Make sure it is set in your .env file.")
+    exit(1)
+    
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 def read_text_file(file_path):
-    """
-    Reads a text file and returns its content as a string.
+    if not os.path.exists(file_path):
+        logging.error(f"File not found: {file_path}")
+        return None
 
-    Parameters:
-        file_path (str): The path to the text file.
-    Returns:
-        str: The contents of the file as a string.
-    """
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
-            content = file.read()
-        return content
-    except FileNotFoundError:
-        print(f"Error: The file at {file_path} was not found.")
-        return None
-    except IOError:
-        print("Error: An I/O error occurred.")
+            return file.read()
+    except IOError as e:
+        logging.error(f"Failed to read file {file_path}: {e}")
         return None
 
 
+def save_html_to_file(html_code, output_path="./output/artykul.html"):
+    try:
+        if not os.path.exists(output_path):
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            open(output_path, "w").close()
+            
+        with open(output_path, "w", encoding="utf-8") as file:
+            file.write(html_code)
+        logging.info(f"HTML successfully saved to {output_path}")
+    except IOError as e:
+        logging.error(f"Failed to save HTML to {output_path}: {e}")
 
-def get_openai_response(prompt):
-    """
-    Sends a prompt to the OpenAI API and returns the response.
 
-    Parameters:
-        prompt (str): The prompt to send to the API.
+def extract_alt_texts(html_code):
+    try:
+        soup = BeautifulSoup(html_code, 'html.parser')
+        alt_texts = [img.get('alt') for img in soup.find_all('img') if img.get('alt')]
+        
+        logging.info(f"Extracted {len(alt_texts)} 'alt' attributes from images.")
+        
+        return alt_texts
+    except Exception as e:
+        logging.error(f"Error parsing HTML: {e}")
+        return []
 
-    Returns:
-        str: The response from the API, or an error message if the request fails.
-    """
-    client = OpenAI(
-        api_key=openai_api_key
-    )
 
-    chat_completion = client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": prompt,
-            }
-        ],
-        model="gpt-3.5-turbo",
-    )
+def insert_image_paths(html_code, image_names):
+    if not image_names:
+        logging.warning("No image paths provided. Returning original HTML.")
+        return html_code
+
+    try:
+        soup = BeautifulSoup(html_code, "html.parser")
+        img_tags = soup.find_all("img")
+
+        for img_tag, img_path in zip(img_tags, image_names):
+            img_tag['src'] = "images/" + img_path
+
+        logging.info("Image paths successfully inserted into HTML.")
+        
+        return soup.prettify(formatter=UnsortedAttributes())
+    except Exception as e:
+        logging.error(f"Error inserting image paths: {e}")
+        return html_code
+
+
+def get_openai_response():
+    article_content = read_text_file("./article.txt")
+    generate_html_prompt = read_text_file("./prompts/generate_html_structure.txt")
+
+    if not article_content or not generate_html_prompt:
+        logging.error("Failed to read input files for OpenAI request.")
+        return None
     
-    print(chat_completion)
+    client = OpenAI(api_key=openai_api_key)
 
-    return chat_completion
+    try:
+        response = client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": generate_html_prompt + article_content},
+            ],
+            model="gpt-4o-mini",
+            temperature=1,
+        )
+        
+        json_response = json.loads(response.to_json())
+        html_content = json_response['choices'][0]['message']['content']
+        
+        logging.info("Successfully generated HTML using OpenAI.")
+        
+        return html_content
+    except Exception as e:
+        logging.error(f"Error interacting with OpenAI API: {e}")
+        return None
 
+
+def generate_image(prompt):
+    client = OpenAI(api_key=openai_api_key)
+    
+    try:
+        response = client.images.generate(
+            model="dall-e-3",
+            prompt=prompt,
+            size="1024x1024",
+            quality="standard",
+            n=1,
+        )
+        image_url = response.data[0].url
+        logging.info("Image successfully generated.")
+        return image_url
+    except Exception as e:
+        logging.error(f"Error generating image: {e}")
+        return None
+
+
+def download_image(image_url, image_name):
+    try:
+        response = requests.get(image_url, stream=True)
+        if response.status_code == 200:
+            with open("output/images/" + image_name, 'wb') as file:
+                file.write(response.content)
+            logging.info(f"Image downloaded and saved to {"output/images/" + image_name}")
+        else:
+            logging.error(f"Failed to download image. HTTP status code: {response.status_code}")
+    except Exception as e:
+        logging.error(f"Error downloading image: {e}")
+    
 
 def main():
-    content = read_text_file("./article.txt")
-    response = get_openai_response("Tell me something about dogs")
-    # print(response)
+    try:
+        image_names = []
+        response = get_openai_response()
+        
+        if not response:
+            logging.error("Failed to generate HTML content. Exiting...")
+            return
+
+        image_descriptions = extract_alt_texts(response)
+        
+        if not image_descriptions:
+            logging.warning("No image descriptions found in the HTML content.")
+        else:
+            for description in image_descriptions:
+                image_url = generate_image(description)
+                if image_url:
+                    image_name = slugify(description) + ".jpg"
+                    download_image(image_url, image_name)
+                    image_names.append(image_name)
+                    response = insert_image_paths(response, image_names)
+                    
+        save_html_to_file(response)
+    except Exception as e:
+        logging.error(f"An unexpected error occurred in the main flow: {e}")
 
 
 if __name__ == "__main__":

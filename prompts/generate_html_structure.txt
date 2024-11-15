@@ -1,0 +1,45 @@
+Przekształć dostarczony artykuł na kod HTML, przestrzegając następujących wytycznych:
+
+- Przygotuj odpowiednią strukturę HTML, używając tagów nagłówków (`<h1>`, `<h2>`, itd.) do rozdziału treści oraz zastosuj tagi `<p>` do treści akapitów.
+- W przypadku odniesień do list w artykule, użyj list nieuporządkowanych (`<ul>`) lub uporządkowanych (`<ol>`), w zależności od kontekstu.
+- Przeanalizuj treść artykułu, aby samodzielnie określić miejsca, w których warto dodać ilustracje, staraj dodać się kilka ilustracji w całym artykule. Do oznaczenia ilustracji użyj tagu `<img src="image_placeholder.png" alt="[szczegółowy_prompt_do_AI]" />`. "alt" powinien opisywać w kilku słowach sugerowany motyw grafiki. Umieść także podpis pod każdą ilustracją używając tagu `<figcaption>`.
+- Stwórz kod HTML koncentrujący się tylko na treści, wyłącznie w obrębie tagów `<body>` i `</body>`. Nie dodawaj stylów (`CSS`) ani skryptów (`JavaScript`). Kod powinien przedstawiać logiczną i wygodną dla użytkownika strukturę artykułu.
+- Rozdziel artykuł na logiczne akapity, wykorzystaj strukturalne podziały dla zachowania czytelności.
+- Dodaj tag `<div>` z klasą o nazwie `container`, w którym znajdować się będzie cała zawartość artykułu.
+- Nie dodawaj tagu `<body>'.
+- Nie używaj w treści odpowiedzi języka Markdown np. '```html', '```'.
+
+# Output Format
+
+- Oczekiwany rezultat: kod HTML wykorzystujący tagi takie jak: `<h1>`, `<h2>`, `<p>`, `<ul>`, `<ol>`, `<img>`, `<figcaption>`, i ewentualnie inne, które mogą pomóc uzyskać czytelność tekstu.
+- Przykład powinien uwzględniać logiczny podział tekstu ze strukturą opisującą artykuł i nie zawierać stylizacji (css).
+
+# Examples
+
+### Przykład struktury HTML
+<h1>Nagłówek artykułu</h1>
+<p>To jest wprowadzenie do artykułu, które przedstawia główne zagadnienia omawiane w pracy.</p>
+<h2>Nagłówek sekcji</h2>
+<p>Treść tej sekcji opisuje szczegóły danego zagadnienia.</p>
+<figure>
+  <img src="image_placeholder.jpg" alt="Opis grafiki do wygenerowania przez AI" />
+  <figcaption>Podpis pod grafiką, wyjaśniający jej zawartość.</figcaption>
+</figure>
+<h2>Kolejna sekcja</h2>
+<p>Kontynuacja treści z dodatkowymi informacjami. Tutaj można zamieścić bardziej szczegółowe dane.</p>
+<ul>
+  <li>Element listy pierwszy.</li>
+  <li>Element listy drugi.</li>
+  <li>Element listy trzeci.</li>
+</ul>
+<h2>Podsumowanie</h2>
+<p>Końcowe myśli i wnioski, które stanowią podsumowanie głównych punktów poruszonych w artykule.</p>
+(Użyj powyższej struktury jako odniesienia przy tworzeniu całej stronie artykułu.)
+
+# Notes
+
+- Kod powinien zawierać kompletną strukturę oraz logiczny podział na sekcje, podsekcje, ilustracje i listy.
+- Przy tworzeniu atrybutu `alt` dla ilustracji, postaraj się dostarczyć wystarczająco szczegółowy opis, aby pomóc w obrazowaniu, co dana grafika przedstawia (czy to schemat, wykres, ilustracja tematyczna itp.).
+- Pamiętaj, że celem jest zapewnienie możliwie najlepszej struktury tekstu oraz jego przejrzystości, nie poprzez stylizację, ale dzięki odpowiedniemu użyciu dostępnych elementów HTML.
+
+Oto artykuł:
