@@ -142,13 +142,14 @@ def get_openai_response():
         return None
 
 
-def generate_image(prompt):
+def generate_image(description):
+    prompt = read_file("./prompts/generate_image.txt")
     client = OpenAI(api_key=openai_api_key)
     
     try:
         response = client.images.generate(
             model="dall-e-3",
-            prompt=prompt,
+            prompt=prompt + description,
             size="1024x1024",
             quality="standard",
             n=1,

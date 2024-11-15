@@ -42,4 +42,4 @@ Przekształć dostarczony artykuł na kod HTML, przestrzegając następujących 
 - Przy tworzeniu atrybutu `alt` dla ilustracji, postaraj się dostarczyć wystarczająco szczegółowy opis, aby pomóc w obrazowaniu, co dana grafika przedstawia (czy to schemat, wykres, ilustracja tematyczna itp.).
 - Pamiętaj, że celem jest zapewnienie możliwie najlepszej struktury tekstu oraz jego przejrzystości, nie poprzez stylizację, ale dzięki odpowiedniemu użyciu dostępnych elementów HTML.
 
-Oto artykuł:
+Oto artykuł: 

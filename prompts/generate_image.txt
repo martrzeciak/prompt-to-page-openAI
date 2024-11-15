@@ -1,0 +1,24 @@
+Przygotuj ilustrację na podstawie poniższego tekstu opisu w formacie .jpg o proporcjach 1:1.
+
+Ilustracja powinna zawierać następujące cechy:
+
+- **Dokładność:** Obraz powinien wiernie odwzorowywać podane informacje, w tym przedstawione emocje, kompozycję, kolorystykę, porę dnia i inne szczegóły uwzględnione w opisie.
+- **Styl:** Styl ilustracji (artystyczny, realistyczny, stylizowany) powinien być adekwatny do konkretnego charakteru opisu, należy dopasować stylistykę tak, aby najlepiej odzwierciedlała zamysł autora.
+
+# Kroki
+
+1. **Analiza opisu:** Przestudiuj uważnie szczegóły zawarte w opisie. Uwzględnij każde wskazane cechy, takie jak kolory, emocje, układ obiektów oraz ich charakter.
+2. **Tworzenie ilustracji:** Opracuj wizję graficzną zgodną z opisem, wykazując się kreatywnością w granicach wytycznych. Wzoruj się na kluczowych elementach podanych w opisie.
+3. **Generowanie pliku:** Przygotuj i zapisz ilustrację w formacie .jpg o odpowiednich proporcjach (1:1) oraz wysokiej rozdzielczości (co najmniej 1024x1024).
+4. **Weryfikacja zgodności:** Sprawdź rezultaty, porównując ilustrację do opisu. Zweryfikuj, czy odwzorowane są kluczowe aspekty, takie jak kompozycja, kolorystyka i nastrój.
+
+# Output Format
+
+- Wynikiem powinien być plik .jpg o rozmiarze 1024x1024 pikseli oraz proporcjach 1:1.
+
+# Notes
+
+- Jeśli jakikolwiek aspekt opisu jest niejasny, skoncentruj się na najważniejszych wskazówkach i kieruj się intuicją, upewniając się, że najważniejsze elementy zostały poprawnie zinterpretowane.
+- Ogranicz kreatywność do tego, co jest ściśle określone, chyba że opis stanowi inaczej i sugeruje większą swobodę twórczą.
+
+Oto opis ilustracji: 
