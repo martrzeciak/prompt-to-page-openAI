@@ -146,8 +146,7 @@ def get_openai_response():
         return None
 
 
-def generate_image(description):
-    prompt = read_file("./prompts/generate_image.txt")
+def generate_image(description, prompt):
     client = OpenAI(api_key=openai_api_key)
     
     try:
@@ -180,9 +179,10 @@ def download_image(image_url, image_name):
     
 
 def process_images(image_descriptions):
+    prompt = read_file("./prompts/generate_image.txt")
     image_names = []
     for description in image_descriptions:
-        image_url = generate_image(description)
+        image_url = generate_image(description, prompt)
         if image_url:
             image_name = slugify(description) + ".jpg"
             download_image(image_url, image_name)
