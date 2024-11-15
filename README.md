@@ -67,3 +67,28 @@ Jeśli działanie aplikacji zakończy się sukcesem w katalogu `output` zostaną
 - `setup.bat`: Skrypt odpowiedzialny za wstępną konfigurację.
 
 **OS:**  Windows 11 23H2 | **Python**  3.13.0 | **pip** 24.2 
+
+## Opis działania aplikacji
+
+1. **Ładowanie zmiennych środowiskowych**  
+Aplikacja ładuje zmienne środowiskowe z pliku `.env`, w tym klucz API dla OpenAI. Klucz ten jest niezbędny do komunikacji z usługą OpenAI. Jeśli zmienna OPENAI_API_KEY nie jest ustawiona, aplikacja zakończy działanie z odpowiednim komunikatem o błędzie.
+
+2. **Inicjalizacja logowania**  
+Aplikacja ustawia konfigurację logowania, aby monitorować działanie programu. Wszelkie informacje, błędy i ostrzeżenia są rejestrowane w dzienniku z datą, poziomem logowania i komunikatem.
+
+3. **Wczytywanie plików**  
+Aplikacja umożliwia wczytanie różnych plików wejściowych:
+   - `article.txt:` Treść artykułu, który ma zostać przetworzony.
+   - `prompts/generate_html_structure.txt:` Prompt do generowania struktury HTML na podstawie artykułu.
+   - `prompts/generate_image.txt:` Prompt do generowania obrazów.
+
+4. **Generowanie HTML**  
+Po wczytaniu plików, aplikacja łączy treść artykułu z odpowiednimi wytycznymi i wysyła zapytanie do API OpenAI w celu wygenerowania struktury HTML. API zwraca HTML, który następnie jest oczyszczany z nadmiarowego kodu Markdown i przygotowywany do dalszej obróbki.
+
+5. **Generowanie obrazów**  
+Aplikacja analizuje wygenerowany HTML, ekstraktując teksty alt z tagów <img>. Te teksty stanowią opisy obrazów, które będą generowane. Dla każdego opisu:
+   - Wysyłane jest zapytanie do OpenAI (model DALL-E), aby stworzyć odpowiedni obraz.
+   - Obraz jest pobierany i zapisywany lokalnie w folderze `output/images`.
+
+6. **Modyfikowanie HTML**  
+Po wygenerowaniu i zapisaniu obrazów, aplikacja aktualizuje HTML, wstawiając odpowiednie ścieżki do pobranych obrazów w tagach <img>. Następnie, aplikacja umieszcza wygenerowany HTML pliku `artykul.html`, a także pełny widok w pliku `podglad.html`.
