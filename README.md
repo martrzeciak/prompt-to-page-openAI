@@ -3,9 +3,6 @@
 Przed pierwszym uruchomieniem aplikacji należy uruchomić skrypt `setup.bat`, który stworzy wirtualne środowisko (virtual environment), aktywuje je, a następnie zainstaluje wszystkie potrzebne biblioteki i stworzy niezbędną strukturę folderów.
 
 Uruchomienie skryptu:
-```bash
-chmod +x build.sh
-```
 powershell: 
 ```powershell
 ./setup.bat
@@ -44,8 +41,7 @@ python main.py
   - `generate_html_structure.txt`: Określa wytyczne do generowania struktury HTML.
   - `generate_image.txt`: Prompt używany do generowania grafik w AI.
 
-- **📂 src**: Katalog na kod źródłowy aplikacji.
-  - `main.py`: Główny skrypt aplikacji odpowiedzialny za całe działanie programu.
+- **main.py**: Główny skrypt aplikacji odpowiedzialny za całe działanie programu.
 
 - **szablon.html**: Szablon z pustą sekcją `<body>`.
 
