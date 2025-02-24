@@ -73,25 +73,25 @@ If the application runs successfully, the `output` directory will contain `artyk
 
 ## Opis działania aplikacji
 
-1. **Ładowanie zmiennych środowiskowych**  
-Aplikacja ładuje zmienne środowiskowe z pliku `.env`, w tym klucz API dla OpenAI. Klucz ten jest niezbędny do komunikacji z usługą OpenAI. Jeśli zmienna OPENAI_API_KEY nie jest ustawiona, aplikacja zakończy działanie z odpowiednim komunikatem o błędzie.
+1. **Loading Environment Variables**  
+The application loads environment variables from the `.env` file, including the OpenAI API key. This key is required for communication with OpenAI services. If the `OPENAI_API_KEY` variable is not set, the application will terminate with an appropriate error message.
 
-2. **Inicjalizacja logowania**  
-Aplikacja ustawia konfigurację logowania, aby monitorować działanie programu. Wszelkie informacje, błędy i ostrzeżenia są rejestrowane w dzienniku z datą, poziomem logowania i komunikatem.
+2. **Logging Initialization**  
+The application sets up logging to monitor its operation. All information, errors, and warnings are recorded in a log file with the date, logging level, and message.
 
-3. **Wczytywanie plików**  
-Aplikacja umożliwia wczytanie różnych plików wejściowych:
-   - `article.txt:` Treść artykułu, który ma zostać przetworzony.
-   - `prompts/generate_html_structure.txt:` Prompt do generowania struktury HTML na podstawie artykułu.
-   - `prompts/generate_image.txt:` Prompt do generowania obrazów.
+3. **Loading Files**  
+The application allows loading various input files:
+   - `article.txt`: The article content to be processed.
+   - `prompts/generate_html_structure.txt`: A prompt for generating the HTML structure based on the article.
+   - `prompts/generate_image.txt`: A prompt for generating images.
 
-4. **Generowanie HTML**  
-Po wczytaniu plików, aplikacja łączy treść artykułu z odpowiednimi wytycznymi i wysyła zapytanie do API OpenAI w celu wygenerowania struktury HTML. API zwraca HTML, który następnie jest oczyszczany z nadmiarowego kodu Markdown i przygotowywany do dalszej obróbki.
+4. **Generating HTML**  
+After loading the files, the application combines the article content with the corresponding guidelines and sends a request to the OpenAI API to generate the HTML structure. The API returns HTML, which is then cleaned of unnecessary Markdown code and prepared for further processing.
 
-5. **Generowanie obrazów**  
-Aplikacja analizuje wygenerowany HTML, ekstraktując teksty alt z tagów <img>. Te teksty stanowią opisy obrazów, które będą generowane. Dla każdego opisu:
-   - Wysyłane jest zapytanie do OpenAI (model DALL-E), aby stworzyć odpowiedni obraz.
-   - Obraz jest pobierany i zapisywany lokalnie w folderze `output/images`.
+5. **Generating Images**  
+The application analyzes the generated HTML, extracting alt text from `<img>` tags. These texts serve as descriptions for the images to be generated. For each description:
+   - A request is sent to OpenAI (DALL-E model) to create the corresponding image.
+   - The image is downloaded and saved locally in the `output/images` folder.
 
-6. **Modyfikowanie HTML**  
-Po wygenerowaniu i zapisaniu obrazów, aplikacja aktualizuje HTML, wstawiając odpowiednie ścieżki do pobranych obrazów w tagach <img>. Następnie, aplikacja umieszcza wygenerowany HTML pliku `artykul.html`, a także pełny widok w pliku `podglad.html`.
+7. **Modifying HTML**  
+After generating and saving the images, the application updates the HTML by inserting the appropriate paths to the downloaded images in the `<img>` tags. Finally, the application saves the modified HTML to `artykul.html` and a full preview to `podglad.html`.
