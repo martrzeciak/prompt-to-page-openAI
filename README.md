@@ -21,7 +21,7 @@ Opening the editor:
 ```cmd
 code .
 ```
-he script will install the libraries listed in the `requirements.txt` file:
+The script will install the libraries listed in the `requirements.txt` file:
 ```powershell
 python-dotenv
 openai
@@ -29,8 +29,6 @@ beautifulsoup4
 requests
 python-slugify
 ```
-W pliku `.env` umieścić należy klucz do API OpenAI: `OPENAI_API_KEY=your_api_key`. Po zmodyfikowaniu pliku konieczne jest ponowne uruchomienie terminala.
-
 In the `.env` file, you must include your OpenAI API key: `OPENAI_API_KEY=your_api_key`. After modifying the file, restarting the terminal is required.
 
 The following folder structure will also be created (if it does not already exist):
@@ -71,7 +69,7 @@ If the application runs successfully, the `output` directory will contain `artyk
 
 **OS:**  Windows 11 23H2 | **Python**  3.13.0 | **pip** 24.2 
 
-## Opis działania aplikacji
+## Application functionality description
 
 1. **Loading Environment Variables**  
 The application loads environment variables from the `.env` file, including the OpenAI API key. This key is required for communication with OpenAI services. If the `OPENAI_API_KEY` variable is not set, the application will terminate with an appropriate error message.
